@@ -1,4 +1,6 @@
-![Capa](/assets.biblia.jpeg)
+<p align="center">
+  <img src="/assets.biblia.jpeg" alt="Biblia - Quiz" width="100%" />
+</p>
 # 📖 Bíblia Quiz — Sistema Inteligente de Perguntas Bíblicas
 
 Motor de quiz dinâmico baseado em **texto estruturado**.  
