@@ -5,12 +5,6 @@ let atual = null;
 
 /* ===================== */
 
-const NT = ["Mateus","Marcos","Lucas","João","Atos","Romanos"];
-const AT_SABEDORIA = ["Salmos","Provérbios","Eclesiastes"];
-const AT_PROFETAS = ["Isaías","Jeremias","Ezequiel","Daniel"];
-
-/* ===================== */
-
 async function carregarBiblia(){
 const r = await fetch("bible.txt");
 const t = await r.text();
@@ -34,69 +28,38 @@ texto:m[3]
 
 /* ===================== */
 
-function filtrarReligiao(livro, religiao){
-
-switch(religiao){
-
-case "Budismo":
-return AT_SABEDORIA.includes(livro);
-
-case "Espiritismo":
-return NT.includes(livro);
-
-case "Umbanda":
-return AT_PROFETAS.includes(livro) || AT_SABEDORIA.includes(livro);
-
-case "Candomblé":
-return AT_PROFETAS.includes(livro);
-
-case "Ateu":
-return true;
-
-default:
-return true;
-}
-}
-
-/* ===================== */
-
-function gerarPerguntas(religiao){
+function gerarPerguntas(){
 
 perguntasGeradas = [];
 
 const padroes = [
-
-/^(\w+)\s+abriu\s+(.+)/i,
-/^(\w+)\s+construiu\s+(.+)/i,
-/^(\w+)\s+traiu\s+(.+)/i,
-/^(\w+)\s+entregou\s+(.+)/i,
-/^(\w+)\s+curou\s+(.+)/i,
-/^(\w+)\s+ressuscitou\s+(.+)/i,
-/^(\w+)\s+matou\s+(.+)/i,
-/^(\w+)\s+libertou\s+(.+)/i,
-/^(\w+)\s+disse\s+(.+)/i,
-/^(\w+)\s+fez\s+(.+)/i
+/^(\w+)\s+abriu\s+/i,
+/^(\w+)\s+construiu\s+/i,
+/^(\w+)\s+traiu\s+/i,
+/^(\w+)\s+entregou\s+/i,
+/^(\w+)\s+curou\s+/i,
+/^(\w+)\s+ressuscitou\s+/i,
+/^(\w+)\s+matou\s+/i,
+/^(\w+)\s+libertou\s+/i
 ];
 
 versos.forEach(v=>{
 
 const p = parseVerso(v);
 if(!p) return;
-if(!filtrarReligiao(p.livro, religiao)) return;
 
 for(let r of padroes){
 
 const m = p.texto.match(r);
-
 if(m){
 
-perguntasGeradas.push({
+const nome = m[1];
 
-pergunta: `Quem ${m[0].replace(m[1]+" ","")}?`,
-resposta: m[1],
+perguntasGeradas.push({
+pergunta: p.texto.replace(nome, "Quem").replace(/\.$/,"?"),
+resposta: nome,
 ref: `${p.livro} ${p.ref}`,
 verso: p.texto
-
 });
 
 break;
@@ -104,8 +67,6 @@ break;
 }
 
 });
-
-perguntasGeradas = perguntasGeradas.slice(0,600);
 
 console.log("Perguntas geradas:", perguntasGeradas.length);
 }
@@ -115,10 +76,9 @@ console.log("Perguntas geradas:", perguntasGeradas.length);
 function alternativas(correta){
 
 const nomes = [...new Set(perguntasGeradas.map(p=>p.resposta))];
-
 const s = new Set([correta]);
 
-while(s.size<5){
+while(s.size<4){
 s.add(nomes[Math.random()*nomes.length|0]);
 }
 
@@ -129,22 +89,32 @@ return [...s].sort(()=>Math.random()-0.5);
 
 async function iniciarQuiz(){
 
-const nome = nomeInput.value;
-const religiao = religiaoSelect.value;
+const nomeInput = document.getElementById("nome");
+const religiaoSelect = document.getElementById("religiao");
 
-ola.innerText = `Olá ${nome}!`;
+if(!nomeInput || !religiaoSelect){
+alert("Erro DOM");
+return;
+}
+
+const nome = nomeInput.value || "Visitante";
+document.getElementById("ola").innerText = `Olá ${nome}!`;
 
 await carregarBiblia();
-gerarPerguntas(religiao);
+gerarPerguntas();
 
 usadas.clear();
-
 novaPergunta();
 }
 
 /* ===================== */
 
 function novaPergunta(){
+
+const btnProxima = document.getElementById("btnProxima");
+const feedback = document.getElementById("feedback");
+const q = document.getElementById("q");
+const altsDiv = document.getElementById("altsDiv");
 
 btnProxima.style.display="none";
 feedback.innerHTML="";
@@ -170,7 +140,6 @@ c: alts.indexOf(p.resposta)
 };
 
 q.innerText = p.pergunta;
-
 altsDiv.innerHTML="";
 
 alts.forEach((t,i)=>{
@@ -186,46 +155,24 @@ altsDiv.appendChild(d);
 
 function responder(i,el){
 
+const btnProxima = document.getElementById("btnProxima");
+const feedback = document.getElementById("feedback");
+
 document.querySelectorAll(".alt")
 .forEach(x=>x.onclick=null);
 
-const corretaEl =
-document.querySelectorAll(".alt")[atual.c];
-
-corretaEl.classList.add("correta");
+document.querySelectorAll(".alt")[atual.c]
+.classList.add("correta");
 
 if(i===atual.c){
-
 el.classList.add("correta");
-
-feedback.innerHTML = `
-✅ Correto!<br>
-<b>${atual.resposta}</b><br>
-📖 ${atual.ref}<br>
-<small>${atual.verso}</small>
-`;
-
+feedback.innerHTML =
+`✅ Correto!<br><b>${atual.resposta}</b><br>📖 ${atual.ref}<br><small>${atual.verso}</small>`;
 }else{
-
 el.classList.add("errada");
-
-feedback.innerHTML = `
-📖 Agora você já sabe:<br>
-<b>${atual.resposta}</b><br>
-📖 ${atual.ref}<br>
-<small>${atual.verso}</small>
-`;
+feedback.innerHTML =
+`📖 Agora você já sabe:<br><b>${atual.resposta}</b><br>📖 ${atual.ref}<br><small>${atual.verso}</small>`;
 }
 
 btnProxima.style.display="block";
 }
-
-/* ===================== */
-
-const nomeInput = document.getElementById("nome");
-const religiaoSelect = document.getElementById("religiao");
-const q = document.getElementById("q");
-const altsDiv = document.getElementById("altsDiv");
-const feedback = document.getElementById("feedback");
-const btnProxima = document.getElementById("btnProxima");
-const ola = document.getElementById("ola");
