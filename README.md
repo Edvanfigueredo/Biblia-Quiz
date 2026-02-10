@@ -1,4 +1,4 @@
-
+![Capa](biblia.jpeg)
 # 📖 Bíblia Quiz — Sistema Inteligente de Perguntas Bíblicas
 
 Motor de quiz dinâmico baseado em **texto estruturado**.  
