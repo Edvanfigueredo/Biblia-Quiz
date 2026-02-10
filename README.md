@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/Biblia-Quiz/assets.biblia.jpeg" alt="Biblia & Quiz" width="100%" />
+  <img src="/Biblia-Quiz/assets/biblia.jpeg" alt="Biblia & Quiz" width="50%" />
 </p>
 # 📖 Bíblia Quiz — Sistema Inteligente de Perguntas Bíblicas
 
