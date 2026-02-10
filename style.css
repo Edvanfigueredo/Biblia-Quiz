@@ -1,0 +1,186 @@
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:'Segoe UI',Arial;
+}
+
+/* PAGE */
+
+.page{
+min-height:100vh;
+padding:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+/* CARD */
+
+.card{
+width:100%;
+max-width:520px;
+padding:26px;
+border-radius:18px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(8px);
+box-shadow:0 15px 40px rgba(0,0,0,.5);
+text-align:center;
+}
+
+/* TEMAS */
+
+.bordo{
+background:linear-gradient(160deg,#3b0000,#7b1c1c,#2a0000);
+color:white;
+}
+
+/* BÍBLIA IMG */
+
+.hero-img{
+width:220px;
+margin:10px auto 20px;
+display:block;
+border-radius:14px;
+box-shadow:0 0 30px rgba(0,0,0,.8);
+transition:.4s;
+}
+
+.hero-img:hover{
+transform:scale(1.06);
+}
+
+/* BOTÃO QUIZ DESTAQUE */
+
+.quiz-btn{
+background:linear-gradient(45deg,#ffd54f,#ff9800);
+color:#3e2723;
+font-size:20px;
+font-weight:900;
+letter-spacing:.5px;
+padding:18px;
+border:none;
+border-radius:16px;
+cursor:pointer;
+box-shadow:
+0 0 0 rgba(255,152,0,.7);
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(255,152,0,.7)}
+70%{box-shadow:0 0 0 18px rgba(255,152,0,0)}
+100%{box-shadow:0 0 0 0 rgba(255,152,0,0)}
+}
+
+.quiz-btn:hover{
+transform:scale(1.05);
+filter:brightness(1.1);
+}
+
+/* BOTÃO SECUNDÁRIO */
+
+.sec-btn{
+background:#ffffff22;
+color:white;
+font-weight:700;
+padding:14px;
+border-radius:14px;
+border:1px solid #ffffff33;
+cursor:pointer;
+margin-top:14px;
+}
+
+.sec-btn:hover{
+background:#ffffff33;
+}
+
+/* MOBILE */
+
+@media(max-width:420px){
+.quiz-btn{font-size:18px}
+}
+
+
+body{
+margin:0;
+font-family:Segoe UI;
+background:linear-gradient(160deg,#3b0000,#7b1c1c);
+color:white;
+}
+
+.container{
+max-width:520px;
+margin:auto;
+padding:20px;
+text-align:center;
+}
+
+.card{
+background:rgba(255,255,255,.1);
+padding:22px;
+border-radius:18px;
+box-shadow:0 12px 30px rgba(0,0,0,.5);
+}
+
+input,select,textarea,button{
+width:100%;
+padding:14px;
+margin:10px 0;
+border-radius:12px;
+border:none;
+font-size:16px;
+}
+
+.quiz-btn{
+background:linear-gradient(45deg,#ffd54f,#ff9800);
+font-weight:900;
+font-size:18px;
+animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(255,152,0,.7)}
+70%{box-shadow:0 0 0 18px rgba(255,152,0,0)}
+100%{box-shadow:0 0 0 0 rgba(255,152,0,0)}
+}
+
+.alt{
+background:white;
+color:black;
+padding:14px;
+margin:8px 0;
+border-radius:10px;
+cursor:pointer;
+}
+
+.correta{background:#2e7d32;color:white}
+.errada{background:#b71c1c;color:white}
+
+.feedback{
+font-weight:bold;
+margin-top:12px;
+font-size:18px;
+}
+
+select option:hover{
+background:#ffb3b3;
+}
+
+select{
+background:white;
+color:black;
+font-weight:600;
+}
+
+/* efeito comemoração */
+
+@keyframes pop{
+0%{transform:scale(0.9)}
+50%{transform:scale(1.1)}
+100%{transform:scale(1)}
+}
+
+.pop{
+animation:pop .4s ease;
+}
